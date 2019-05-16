@@ -1,3 +1,9 @@
+// const theFinalCountdown = () => {
+//   // get utc data from fetch
+//   // do math
+//   //
+// }
+
 const goGetTheImage = () => {
   fetch('https://sdg-astro-api.herokuapp.com/api/Nasa/apod')
     .then(response => {
@@ -19,15 +25,12 @@ const goGetLaunchData = () => {
       return response.json()
     })
     .then(missions => {
-      console.log(missions)
-      missions.forEach(mission => {
-        console.log(mission.mission_name)
-        console.log(mission.launch_site.site_name_long)
-        document.querySelector('.mission-name').textContent =
-          mission.mission_name
-        document.querySelector('.mission-location').textContent =
-          mission.launch_site.site_name_long
-      })
+      console.log(missions[0])
+      document.querySelector('.mission-name').textContent =
+        missions[0].mission_name
+      document.querySelector('.mission-location').textContent =
+        missions[0].launch_site.site_name_long
+      document.querySelector('.mission-info').textContent = missions[0].details
     })
 }
 const main = () => {
