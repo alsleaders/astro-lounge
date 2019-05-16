@@ -11,11 +11,27 @@ const goGetTheImage = () => {
       document.querySelector('.copyright').textContent = message.copyright
       document.querySelector('.image-title').textContent = message.title
     })
-  // .then(message.url => {
-  //   console.log({ message.url })
-  // })
+}
+
+const goGetLaunchData = () => {
+  fetch('https://sdg-astro-api.herokuapp.com/api/SpaceX/launches/upcoming')
+    .then(response => {
+      return response.json()
+    })
+    .then(missions => {
+      console.log(missions)
+      missions.forEach(mission => {
+        console.log(mission.mission_name)
+        console.log(mission.launch_site.site_name_long)
+        document.querySelector('.mission-name').textContent =
+          mission.mission_name
+        document.querySelector('.mission-location').textContent =
+          mission.launch_site.site_name_long
+      })
+    })
 }
 const main = () => {
   goGetTheImage()
+  goGetLaunchData()
 }
 document.addEventListener('DOMContentLoaded', main)

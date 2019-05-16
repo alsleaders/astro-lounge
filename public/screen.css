@@ -56,6 +56,12 @@ nav > a:hover {
   color: antiquewhite;
 }
 
+.image-attribution {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .upcoming-launches {
   background: #ffc107;
   padding: 0.5rem;
