@@ -6,29 +6,50 @@
     <title>Astro Lounge</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="stylesheet" href="/screen.css" />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.5.0/js/all.js"
+      integrity="sha384-GqVMZRt5Gn7tB9D9q7ONtcp4gtHIUEW/yG7h98J7IpE3kpi+srfFyyB/04OV6pG0"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <nav class="menu">
       <section>SDG Astro Lounge</section>
-      <nav>
-        <a href="">About</a>
-        <a href="">Contact us</a>
-      </nav>
+      <section>
+        <nav class="anchor-buttons">
+          <a href="">About</a>
+          <a href="">Contact us</a>
+        </nav>
+      </section>
     </nav>
     <main>
       <!-- <h1 class='hello-world'></h1> img -->
-      <section class="image"></section>
-      <section class="image-attribution"></section>
-      <section class="upcoming-launches">
-        <section class="launches">
-          <buttons></buttons>
-          <div class="api-data"></div>
-          <buttons></buttons>
-        </section>
+      <section class="picture-of-the-day">
+        <h1>Explore your universe.</h1>
       </section>
-      <section class="mission-statement"></section>
+      <section class="image-attribution">
+        copyright <span class="copyright"></span> title
+        <span class="image-title"></span>
+      </section>
+      <section class="upcoming-launches">
+        <h2>Upcoming SpaceX Launches</h2>
+      </section>
+      <section class="launches">
+        <buttons>Left arrow button</buttons>
+        <section class="launch-card">
+          <div class="api-data">
+            You are going to need to insert API data here
+          </div>
+        </section>
+        <buttons>Right arrow button</buttons>
+      </section>
+      <section class="mission-statement">
+        <h2>Our Mission Statement</h2>
+        <p>This is where the alien lorem will go</p>
+      </section>
     </main>
-    <footer><span></span></footer>
+    <footer><span>Made with coffee and tacos by AL</span></footer>
     <script src="/main.js" charset="utf-8"></script>
   </body>
 </html>
