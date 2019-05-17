@@ -30,6 +30,7 @@ body {
   align-items: center;
   background: #512da8;
   color: #fff;
+  font-size: 1.5rem;
 }
 
 .anchor-buttons {
@@ -42,7 +43,7 @@ body {
 nav > a {
   min-width: 5rem;
   padding: 1rem;
-  margin: 1rem;
+  margin: 0;
   color: #fff;
 }
 
