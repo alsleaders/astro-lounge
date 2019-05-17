@@ -25,7 +25,7 @@ const goGetLaunchData = () => {
       return response.json()
     })
     .then(missions => {
-      console.log(missions[0])
+      console.log(missions)
       document.querySelector('.mission-name').textContent =
         missions[0].mission_name
       document.querySelector('.mission-location').textContent =
