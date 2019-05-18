@@ -3,6 +3,10 @@
 //   // do math
 //   //
 // }
+let missionName = []
+let missionLocation = []
+let missionDetails = []
+let index = 0
 
 const goGetTheImage = () => {
   fetch('https://sdg-astro-api.herokuapp.com/api/Nasa/apod')
@@ -26,15 +30,43 @@ const goGetLaunchData = () => {
     })
     .then(missions => {
       console.log(missions)
-      document.querySelector('.mission-name').textContent =
-        missions[0].mission_name
-      document.querySelector('.mission-location').textContent =
-        missions[0].launch_site.site_name_long
-      document.querySelector('.mission-info').textContent = missions[0].details
+      missions.forEach(mission => {
+        console.log(mission.mission_name)
+        // missionName.push(missions.mission_name)
+        console.log(mission.launch_site.site_name_long)
+        // missionLocation.push(missions.launch_site.site_name_long)
+        // missionDetails.push(missions.details)
+        document.querySelector('.mission-name').textContent =
+          mission.mission_name
+        document.querySelector('.mission-location').textContent =
+          mission.launch_site.site_name_long
+        document.querySelector('.mission-info').textContent = mission.details
+      })
+
+      // console.log(missionName)
+      // console.log(missions[0].launch_site.site_name_long)
+      // console.log(missions[0].details)
+      // document.querySelector('.mission-name').textContent =
+      //   missions[0].mission_name
+      // document.querySelector('.mission-location').textContent =
+      //   missions[0].launch_site.site_name_long
+      // document.querySelector('.mission-info').textContent = missions[0].details
     })
 }
+
+const firstUpcomingLaunch = () => {
+  document.querySelector('.mission-name').textContent = missionName[index]
+  console.log(missionName[index])
+  document.querySelector('.mission-location').textContent =
+    missionLocation[index]
+  console.log(missionLocation[index])
+  document.querySelector('.mission-info').textContent = missionDetails[index]
+  console.log(missionDetails[index])
+}
+
 const main = () => {
   goGetTheImage()
   goGetLaunchData()
+  firstUpcomingLaunch()
 }
 document.addEventListener('DOMContentLoaded', main)
