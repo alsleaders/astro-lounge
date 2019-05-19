@@ -31,11 +31,20 @@ const goGetLaunchData = () => {
     })
 }
 // timer logic
-// const theFinalCountdown = () => {
-//   // get utc data from fetch
-//   // do math
-//   //
-// }
+const theFinalCountdown = () => {
+  // get utc data from fetch
+  interval = setInterval(() => {
+    timeRemaining -= 1
+    console.log(timeRemaining)
+    if (timeRemaining === 0) {
+      clearInterval(interval)
+    }
+    const mins = Math.floor(timeRemaining / 60)
+    const secs = timeRemaining - mins * 60
+    console.log(mins, secs)
+    document.querySelector('.mission-countdown').textContent = mins + ':' + secs
+  }, 1000)
+}
 
 // make the first slide
 const firstUpcomingLaunch = () => {
@@ -67,14 +76,14 @@ const clearOldData = () => {
 // make the buttons work
 const nextSpaceXMission = () => {
   clearOldData()
-  firstUpcomingLaunch()
   index++
+  firstUpcomingLaunch()
 }
 
 const previousSpaceXMission = () => {
   clearOldData()
-  firstUpcomingLaunch()
   index--
+  firstUpcomingLaunch()
   if (index < 0) {
     index = index.length
   }
