@@ -72,6 +72,9 @@ const theFinalCountdown = () => {
 const nextSpaceXMission = () => {
   clearOldData()
   index++
+  if ((index = spaceXMissions.length)) {
+    index = 0
+  }
   firstUpcomingLaunch()
   // theFinalCountdown() no, because this messes up when clicked
 }
@@ -80,7 +83,7 @@ const previousSpaceXMission = () => {
   clearOldData()
   index--
   if (index < 0) {
-    index = spaceXMissions.length
+    index = spaceXMissions.length - 1
   }
   console.log(index)
   firstUpcomingLaunch()
@@ -94,8 +97,15 @@ const firstUpcomingLaunch = () => {
     spaceXMissions[index].mission_name
   document.querySelector('.mission-location').textContent =
     spaceXMissions[index].launch_site.site_name_long
+  // document.querySelector('.mission-info').textContent =
+  //   spaceXMissions[index].details
+  // if ((spaceXMissions[index].details = '')) {
+  //   document.querySelector('.mission-info').textContent =
+  //     'No description available yet'
+  // } else {
   document.querySelector('.mission-info').textContent =
     spaceXMissions[index].details
+
   document.querySelector('.mission-countdown').textContent =
     spaceXMissions[index].launch_date_utc
 }
@@ -112,6 +122,7 @@ const main = () => {
   goGetTheImage()
   goGetLaunchData()
   firstUpcomingLaunch()
+  theFinalCountdown()
 }
 
 document.addEventListener('DOMContentLoaded', main)
