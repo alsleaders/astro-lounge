@@ -1,5 +1,7 @@
 let spaceXMissions = []
 let index = 0
+let launchTime
+let interval
 
 // api fetches This is fine leave it alone
 const goGetTheImage = () => {
@@ -26,6 +28,7 @@ const goGetLaunchData = () => {
       console.log(missions)
       console.log(missions[index].launch_site.site_name_long)
       console.log(missions[index].details)
+      console.log(missions[index].launch_date_utc)
       spaceXMissions = missions
       firstUpcomingLaunch()
     })
@@ -33,16 +36,31 @@ const goGetLaunchData = () => {
 // timer logic
 const theFinalCountdown = () => {
   // get utc data from fetch
+  console.log(spaceXMissions[index].launch_date_utc)
+  launchTime =
+    Date.parse(spaceXMissions[index].launch_date_utc) - Date.parse(new Date())
+  if (launchTime <= 0) {
+    clearInterval(interval)
+    document.querySelector('.mission-countdown').textContent =
+      'Mission Launched!'
+  }
+  console.log(launchTime)
   interval = setInterval(() => {
-    timeRemaining -= 1
-    console.log(timeRemaining)
-    if (timeRemaining === 0) {
+    launchTime -= 1
+    console.log(launchTime)
+    if (launchTime <= 0) {
       clearInterval(interval)
+      document.querySelector('.mission-countdown').textContent =
+        'Mission Launched!'
     }
-    const mins = Math.floor(timeRemaining / 60)
-    const secs = timeRemaining - mins * 60
+
+    const days = Math.floor(launchTime / (60 * 60 * 24))
+    const hours = Math.floor((launchTime / (60 * 60)) % 24)
+    const mins = Math.floor(launchTime / 60)
+    const secs = launchTime - mins * 60
     console.log(mins, secs)
-    document.querySelector('.mission-countdown').textContent = mins + ':' + secs
+    document.querySelector('.mission-countdown').textContent =
+      days + ' days ' + hours + ':' + mins + ':' + secs
   }, 1000)
 }
 
@@ -78,6 +96,7 @@ const nextSpaceXMission = () => {
   clearOldData()
   index++
   firstUpcomingLaunch()
+  theFinalCountdown()
 }
 
 const previousSpaceXMission = () => {
@@ -87,6 +106,7 @@ const previousSpaceXMission = () => {
   if (index < 0) {
     index = index.length
   }
+  theFinalCountdown()
 }
 const main = () => {
   goGetTheImage()
