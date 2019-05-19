@@ -45,44 +45,64 @@ const theFinalCountdown = () => {
   console.log(liftoff)
   timeUntilLaunch = liftoff - now
   console.log(timeUntilLaunch)
-  // say Launched if past
-  if (timeUntilLaunch <= 0) {
-    clearInterval(interval)
-    document.querySelector('.mission-countdown').textContent =
-      'Mission Launched!'
-  }
-  console.log(timeUntilLaunch)
   interval = setInterval(() => {
-    timeUntilLaunch -= 1
+    interval = timeUntilLaunch -= 1
+    updateCountdownClock()
     console.log(timeUntilLaunch)
-    const secs = Math.floor((timeUntilLaunch / 1000) % 60)
-    const mins = Math.floor(((timeUntilLaunch / 1000) * 60) % 60)
-    const hours = Math.floor((timeUntilLaunch / (1000 * 60 * 60)) % 24)
-    const days = Math.floor(timeUntilLaunch / (1000 * 60 * 60 * 24))
-    console.log(mins, secs)
-    document.querySelector('.mission-countdown').textContent =
-      days + ' days ' + hours + ':' + mins + ':' + secs
+    if (timeUntilLaunch === 0 || timeUntilLaunch < 0) {
+      clearInterval(interval)
+      document.querySelector('.mission-countdown').textContent =
+        'Mission Launched!'
+    }
   }, 1000)
+  // say Launched if past
+  // if (timeUntilLaunch <= 0) {
+  //   clearInterval(interval)
+  // } else {
+  //   console.log(timeUntilLaunch)
+  //   interval = setInterval(() => {
+  //     timeUntilLaunch -= 1
+  //   })
+  //   // Timer needs to count even when not clicked
+  //   // Timer needs to export in the right formatting
+  // }
+}
+
+const updateCountdownClock = () => {
+  console.log(timeUntilLaunch)
+  let secs = Math.floor((timeUntilLaunch / 1000) % 60)
+  let mins = Math.floor(((timeUntilLaunch / 1000) * 60) % 60)
+  let hours = Math.floor((timeUntilLaunch / (1000 * 60 * 60)) % 24)
+  let days = Math.floor(timeUntilLaunch / (1000 * 60 * 60 * 24))
+  console.log(mins, secs)
+  document.querySelector('.mission-countdown').textContent =
+    days +
+    ' days, ' +
+    hours +
+    ' hours, ' +
+    mins +
+    ' minutes, ' +
+    secs +
+    ' seconds'
   console.log(timeUntilLaunch)
   if (timeUntilLaunch <= 0) {
     clearInterval(interval)
     document.querySelector('.mission-countdown').textContent =
       'Mission Launched!'
   }
-  // Timer needs to count even when not clicked
-  // Timer needs to export in the right formatting
 }
 
 // make the buttons work
 const nextSpaceXMission = () => {
   clearOldData()
-  if (index > spaceXMissions.length) {
+  if (index > spaceXMissions.length - 2) {
     index = 0
   } else {
     index++
   }
   firstUpcomingLaunch()
-  theFinalCountdown()
+  updateCountdownClock()
+  // theFinalCountdown()
   // no, because this messes up when clicked
 }
 
@@ -95,6 +115,7 @@ const previousSpaceXMission = () => {
   }
   console.log(index)
   firstUpcomingLaunch()
+  updateCountdownClock()
   // theFinalCountdown() no, because this messes up when clicked
 }
 
@@ -111,9 +132,9 @@ const firstUpcomingLaunch = () => {
   //   document.querySelector('.mission-info').textContent =
   //     'No description available yet'
   // } else {
-  document.querySelector('.mission-info').textContent =
-    spaceXMissions[index].details
-
+  //   document.querySelector('.mission-info').textContent =
+  //     spaceXMissions[index].details
+  // }
   document.querySelector('.mission-countdown').textContent =
     spaceXMissions[index].launch_date_utc
 }
@@ -131,6 +152,7 @@ const main = () => {
   goGetLaunchData()
   firstUpcomingLaunch()
   theFinalCountdown()
+  updateCountdownClock()
 }
 
 document.addEventListener('DOMContentLoaded', main)
