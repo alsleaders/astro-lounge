@@ -97,6 +97,21 @@ nav > a:hover {
 .launch-card {
   background: #ededed;
   min-height: 10rem;
+  font-size: 14px;
+  padding: 1rem;
+  margin: 16px 48px;
+}
+
+.fa-info-circle {
+  padding: 0 8px 0 0;
+}
+
+.fa-clock {
+  padding: 0 8px 0 0;
+}
+
+.fa-map-marked-alt {
+  padding: 0 8px 0 0;
 }
 
 .right-arrow-button {
@@ -111,7 +126,8 @@ nav > a:hover {
   justify-content: center;
   align-items: center;
 }
-.carosel-header {
+
+.carousel-header {
   text-align: center;
 }
 

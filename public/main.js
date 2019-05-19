@@ -1,9 +1,7 @@
-let missionName = []
-let missionLocation = []
-let missionDetails = []
+let spaceXMissions = []
 let index = 0
 
-// api fetches
+// api fetches This is fine leave it alone
 const goGetTheImage = () => {
   fetch('https://sdg-astro-api.herokuapp.com/api/Nasa/apod')
     .then(response => {
@@ -26,27 +24,10 @@ const goGetLaunchData = () => {
     })
     .then(missions => {
       console.log(missions)
-      missions.forEach(mission => {
-        console.log(mission.mission_name)
-        missionName.push(mission)
-        // console.log(mission.launch_site.site_name_long)
-        // missionLocation.push(missions.launch_site)
-        // missionDetails.push(missions.details)
-        document.querySelector('.mission-name').textContent =
-          mission.mission_name
-        document.querySelector('.mission-location').textContent =
-          mission.launch_site.site_name_long
-        document.querySelector('.mission-info').textContent = mission.details
-      })
-
-      // console.log(missionName)
-      // console.log(missions[0].launch_site.site_name_long)
-      // console.log(missions[0].details)
-      // document.querySelector('.mission-name').textContent =
-      //   missions[0].mission_name
-      // document.querySelector('.mission-location').textContent =
-      //   missions[0].launch_site.site_name_long
-      // document.querySelector('.mission-info').textContent = missions[0].details
+      console.log(missions[index].launch_site.site_name_long)
+      console.log(missions[index].details)
+      spaceXMissions = missions
+      firstUpcomingLaunch()
     })
 }
 // timer logic
@@ -58,20 +39,56 @@ const goGetLaunchData = () => {
 
 // make the first slide
 const firstUpcomingLaunch = () => {
-  document.querySelector('.mission-name').textContent = missionName[index]
-  console.log(missionName[index])
+  console.log(spaceXMissions[index])
+  document.querySelector('.mission-name').textContent =
+    spaceXMissions[index].mission_name
   document.querySelector('.mission-location').textContent =
-    missionLocation[index]
-  console.log(missionLocation[index])
-  document.querySelector('.mission-info').textContent = missionDetails[index]
-  console.log(missionDetails[index])
+    spaceXMissions[index].launch_site.site_name_long
+  document.querySelector('.mission-info').textContent =
+    spaceXMissions[index].details
+  document.querySelector('.mission-countdown').textContent =
+    spaceXMissions[index].launch_date_utc
+  // document.querySelector('.mission-name').textContent = missionName[index]
+  // console.log(missionLocation[index])
+  // document.querySelector('.mission-location').textContent =
+  //   missionLocation[index]
+  // console.log(missionDetails[index])
+  // document.querySelector('.mission-info').textContent = missionDetails[index]
+}
+
+// clear out old slides
+const clearOldData = () => {
+  document.querySelector('.mission-name').textContent = ''
+  document.querySelector('.mission-location').textContent = ''
+  document.querySelector('.mission-info').textContent = ''
+  document.querySelector('.mission-countdown').textContent = ''
 }
 
 // make the buttons work
+const nextSpaceXMission = () => {
+  clearOldData()
+  firstUpcomingLaunch()
+  index++
+}
 
+const previousSpaceXMission = () => {
+  clearOldData()
+  firstUpcomingLaunch()
+  index--
+  if (index < 0) {
+    index = index.length
+  }
+}
 const main = () => {
   goGetTheImage()
   goGetLaunchData()
   firstUpcomingLaunch()
 }
+
 document.addEventListener('DOMContentLoaded', main)
+document
+  .querySelector('.left-arrow-button')
+  .addEventListener('click', previousSpaceXMission)
+document
+  .querySelector('.right-arrow-button')
+  .addEventListener('click', nextSpaceXMission)
