@@ -40,6 +40,7 @@ const theFinalCountdown = () => {
   console.log(spaceXMissions[index].launch_date_utc)
   launchTime =
     Date.parse(spaceXMissions[index].launch_date_utc) - Date.parse(now)
+  console.log(launchTime)
   // say Launched if past
   if (launchTime <= 0) {
     clearInterval(interval)
@@ -71,9 +72,10 @@ const theFinalCountdown = () => {
 // make the buttons work
 const nextSpaceXMission = () => {
   clearOldData()
-  index++
-  if ((index = spaceXMissions.length)) {
+  if (index > spaceXMissions.length) {
     index = 0
+  } else {
+    index++
   }
   firstUpcomingLaunch()
   // theFinalCountdown() no, because this messes up when clicked
@@ -81,8 +83,9 @@ const nextSpaceXMission = () => {
 
 const previousSpaceXMission = () => {
   clearOldData()
-  index--
-  if (index < 0) {
+  if (index > 0) {
+    index--
+  } else {
     index = spaceXMissions.length - 1
   }
   console.log(index)

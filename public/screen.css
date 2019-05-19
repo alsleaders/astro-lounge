@@ -146,6 +146,11 @@ nav > a:hover {
   display: flex;
   flex-direction: column;
   background: #d1c4e9;
+  padding: 1rem;
+}
+
+.mission-statement > h2 {
+  margin: 0;
 }
 footer {
   text-align: center;
