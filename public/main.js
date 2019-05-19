@@ -1,7 +1,8 @@
 let spaceXMissions = []
 let index = 0
-let now = new Date()
-let launchTime
+let today = new Date()
+let now = today.getTime()
+let timeUntilLaunch
 let interval
 
 // api fetches This is fine leave it alone
@@ -34,33 +35,36 @@ const goGetLaunchData = () => {
       firstUpcomingLaunch()
     })
 }
+
 // timer logic
 const theFinalCountdown = () => {
+  console.log('liftoff')
   // get utc data from fetch
-  console.log(spaceXMissions[index].launch_date_utc)
-  launchTime =
-    Date.parse(spaceXMissions[index].launch_date_utc) - Date.parse(now)
-  console.log(launchTime)
+  let liftoff = Date.parse(spaceXMissions[index].launch_date_utc)
+  console.log(now)
+  console.log(liftoff)
+  timeUntilLaunch = liftoff - now
+  console.log(timeUntilLaunch)
   // say Launched if past
-  if (launchTime <= 0) {
+  if (timeUntilLaunch <= 0) {
     clearInterval(interval)
     document.querySelector('.mission-countdown').textContent =
       'Mission Launched!'
   }
-  console.log(launchTime)
+  console.log(timeUntilLaunch)
   interval = setInterval(() => {
-    launchTime -= 1
-    console.log(launchTime)
-    const days = Math.floor(launchTime / (1000 * 60 * 60 * 24))
-    const hours = Math.floor((launchTime / (1000 * 60 * 60)) % 24)
-    const mins = Math.floor(((launchTime / 1000) * 60) % 60)
-    const secs = Math.floor((launchTime / 1000) * 60)
+    timeUntilLaunch -= 1
+    console.log(timeUntilLaunch)
+    const secs = Math.floor((timeUntilLaunch / 1000) % 60)
+    const mins = Math.floor(((timeUntilLaunch / 1000) * 60) % 60)
+    const hours = Math.floor((timeUntilLaunch / (1000 * 60 * 60)) % 24)
+    const days = Math.floor(timeUntilLaunch / (1000 * 60 * 60 * 24))
     console.log(mins, secs)
     document.querySelector('.mission-countdown').textContent =
       days + ' days ' + hours + ':' + mins + ':' + secs
   }, 1000)
-  console.log(launchTime)
-  if (launchTime <= 0) {
+  console.log(timeUntilLaunch)
+  if (timeUntilLaunch <= 0) {
     clearInterval(interval)
     document.querySelector('.mission-countdown').textContent =
       'Mission Launched!'
@@ -78,7 +82,8 @@ const nextSpaceXMission = () => {
     index++
   }
   firstUpcomingLaunch()
-  // theFinalCountdown() no, because this messes up when clicked
+  theFinalCountdown()
+  // no, because this messes up when clicked
 }
 
 const previousSpaceXMission = () => {
