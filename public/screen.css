@@ -27,14 +27,13 @@ body {
 h1 {
   color: white;
   /* change this to be auto-contrasting */
-  @function set-flash-text-color($color: nth($status, 1)) {
-    @if (lightness($color) > 60) {
-      @return $body-font-color; // Lighter background, return dark color
+    /* @if (lightness($color) > 60) {
+    @return $body-font-color; // Lighter background, return dark color
     } @else {
-      @return $white; // Darker background, return light color
+      @return $white; // Darker background, return light color*/
     }
-  }
-}
+  } 
+
 .menu {
   display: flex;
   flex-direction: row;
