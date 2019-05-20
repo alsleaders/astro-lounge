@@ -40,22 +40,13 @@ const goGetLaunchData = () => {
 const theFinalCountdown = () => {
   // console.log('liftoff')
   // get utc data from fetch
-  let liftoff = spaceXMissions[index].launch_date_utc
-  console.log(spaceXMissions)
+  let liftoff = Date.parse(spaceXMissions[index].launch_date_utc)
   // console.log(now)
   // console.log(liftoff)
   timeUntilLaunch = liftoff - now
   // console.log(timeUntilLaunch)
-  interval = setInterval(() => {
-    interval = timeUntilLaunch -= 1
-    updateCountdownClock()
-    // console.log(timeUntilLaunch)
-    if (timeUntilLaunch === 0 || timeUntilLaunch < 0) {
-      clearInterval(interval)
-      document.querySelector('.mission-countdown').textContent =
-        'Mission Launched!'
-    }
-  }, 1000)
+  // interval =
+  setInterval(updateCountdownClock, 1000)
   // say Launched if past
   // if (timeUntilLaunch <= 0) {
   //   clearInterval(interval)
@@ -70,12 +61,16 @@ const theFinalCountdown = () => {
 }
 
 const updateCountdownClock = () => {
+  interval = timeUntilLaunch -= 1
+
+  // updateCountdownClock()
+  timeUntilLaunch -= 1
   // console.log(timeUntilLaunch)
   let secs = Math.floor((timeUntilLaunch / 1000) % 60)
   let mins = Math.floor(((timeUntilLaunch / 1000) * 60) % 60)
   let hours = Math.floor((timeUntilLaunch / (1000 * 60 * 60)) % 24)
   let days = Math.floor(timeUntilLaunch / (1000 * 60 * 60 * 24))
-  // console.log(mins, secs)
+  console.log(mins, secs)
   document.querySelector('.mission-countdown').textContent =
     days +
     ' days, ' +
@@ -91,9 +86,16 @@ const updateCountdownClock = () => {
     document.querySelector('.mission-countdown').textContent =
       'Mission Launched!'
   }
+
+  console.log(timeUntilLaunch)
+  // if (timeUntilLaunch === 0 || timeUntilLaunch < 0) {
+  //   clearInterval(interval)
+  //   document.querySelector('.mission-countdown').textContent =
+  //     'Mission Launched!'
+  // }
 }
 
-let updateHTML = setInterval(updateCountdownClock, 1000)
+// let updateHTML = setInterval(updateCountdownClock, 1000)
 // make the buttons work
 const nextSpaceXMission = () => {
   clearOldData()
@@ -123,7 +125,7 @@ const previousSpaceXMission = () => {
 
 // make the first slide
 const firstUpcomingLaunch = () => {
-  console.log(spaceXMissions[index])
+  // console.log(spaceXMissions)
   document.querySelector('.mission-name').textContent =
     spaceXMissions[index].mission_name
   document.querySelector('.mission-location').textContent =
@@ -139,6 +141,7 @@ const firstUpcomingLaunch = () => {
   // }
   document.querySelector('.mission-countdown').textContent =
     spaceXMissions[index].launch_date_utc
+  theFinalCountdown()
 }
 
 // clear out old slides
@@ -152,10 +155,10 @@ const clearOldData = () => {
 const main = () => {
   goGetTheImage()
   goGetLaunchData()
-  firstUpcomingLaunch()
-  theFinalCountdown()
+  // firstUpcomingLaunch()
+  // theFinalCountdown()
   updateCountdownClock()
-  updateHTML()
+  // updateHTML()
 }
 
 document.addEventListener('DOMContentLoaded', main)
