@@ -12,8 +12,8 @@ const goGetTheImage = () => {
       return response.json()
     })
     .then(message => {
-      console.log(message)
-      console.log(message.url)
+      // console.log(message)
+      // console.log(message.url)
       document.querySelector('.picture-of-the-day').style.backgroundImage =
         'url(' + message.url + ')'
       document.querySelector('.copyright').textContent = message.copyright
@@ -27,10 +27,10 @@ const goGetLaunchData = () => {
       return response.json()
     })
     .then(missions => {
-      console.log(missions)
-      console.log(missions[index].launch_site.site_name_long)
-      console.log(missions[index].details)
-      console.log(missions[index].launch_date_utc)
+      // console.log(missions)
+      // console.log(missions[index].launch_site.site_name_long)
+      // console.log(missions[index].details)
+      // console.log(missions[index].launch_date_utc)
       spaceXMissions = missions
       firstUpcomingLaunch()
     })
@@ -38,17 +38,18 @@ const goGetLaunchData = () => {
 
 // timer logic
 const theFinalCountdown = () => {
-  console.log('liftoff')
+  // console.log('liftoff')
   // get utc data from fetch
-  let liftoff = Date.parse(spaceXMissions[index].launch_date_utc)
-  console.log(now)
-  console.log(liftoff)
+  let liftoff = spaceXMissions[index].launch_date_utc
+  console.log(spaceXMissions)
+  // console.log(now)
+  // console.log(liftoff)
   timeUntilLaunch = liftoff - now
-  console.log(timeUntilLaunch)
+  // console.log(timeUntilLaunch)
   interval = setInterval(() => {
     interval = timeUntilLaunch -= 1
     updateCountdownClock()
-    console.log(timeUntilLaunch)
+    // console.log(timeUntilLaunch)
     if (timeUntilLaunch === 0 || timeUntilLaunch < 0) {
       clearInterval(interval)
       document.querySelector('.mission-countdown').textContent =
@@ -69,12 +70,12 @@ const theFinalCountdown = () => {
 }
 
 const updateCountdownClock = () => {
-  console.log(timeUntilLaunch)
+  // console.log(timeUntilLaunch)
   let secs = Math.floor((timeUntilLaunch / 1000) % 60)
   let mins = Math.floor(((timeUntilLaunch / 1000) * 60) % 60)
   let hours = Math.floor((timeUntilLaunch / (1000 * 60 * 60)) % 24)
   let days = Math.floor(timeUntilLaunch / (1000 * 60 * 60 * 24))
-  console.log(mins, secs)
+  // console.log(mins, secs)
   document.querySelector('.mission-countdown').textContent =
     days +
     ' days, ' +
@@ -84,7 +85,7 @@ const updateCountdownClock = () => {
     ' minutes, ' +
     secs +
     ' seconds'
-  console.log(timeUntilLaunch)
+  // console.log(timeUntilLaunch)
   if (timeUntilLaunch <= 0) {
     clearInterval(interval)
     document.querySelector('.mission-countdown').textContent =
@@ -92,6 +93,7 @@ const updateCountdownClock = () => {
   }
 }
 
+let updateHTML = setInterval(updateCountdownClock, 1000)
 // make the buttons work
 const nextSpaceXMission = () => {
   clearOldData()
@@ -113,7 +115,7 @@ const previousSpaceXMission = () => {
   } else {
     index = spaceXMissions.length - 1
   }
-  console.log(index)
+  // console.log(index)
   firstUpcomingLaunch()
   updateCountdownClock()
   // theFinalCountdown() no, because this messes up when clicked
@@ -126,8 +128,8 @@ const firstUpcomingLaunch = () => {
     spaceXMissions[index].mission_name
   document.querySelector('.mission-location').textContent =
     spaceXMissions[index].launch_site.site_name_long
-  // document.querySelector('.mission-info').textContent =
-  //   spaceXMissions[index].details
+  document.querySelector('.mission-info').textContent =
+    spaceXMissions[index].details
   // if ((spaceXMissions[index].details = '')) {
   //   document.querySelector('.mission-info').textContent =
   //     'No description available yet'
@@ -153,9 +155,11 @@ const main = () => {
   firstUpcomingLaunch()
   theFinalCountdown()
   updateCountdownClock()
+  updateHTML()
 }
 
 document.addEventListener('DOMContentLoaded', main)
+document.addEventListener('DOMContentLoaded', theFinalCountdown)
 document
   .querySelector('.left-arrow-button')
   .addEventListener('click', previousSpaceXMission)
